@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Interactive Kenyan payroll calculator using 2026 PAYE, NSSF, SHIF and Affordable Housing Levy rules.">
+  <title>KenPay, Kenyan Payroll System</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#dashboard" aria-label="KenPay dashboard">
+      <span class="brand-mark">KP</span>
+      <span>KenPay</span>
+    </a>
+    <nav aria-label="Primary navigation">
+      <button class="nav-link active" data-view="dashboard">Dashboard</button>
+      <button class="nav-link" data-view="calculator">Calculator</button>
+      <button class="nav-link" data-view="employees">Employees</button>
+      <button class="nav-link" data-view="compliance">Compliance</button>
+    </nav>
+    <div class="period"><span class="pulse"></span> September 2026 payroll</div>
+  </header>
+
+  <main>
+    <section class="view active" id="dashboard" aria-labelledby="dashboard-title">
+      <div class="page-head">
+        <div>
+          <p class="eyebrow">PAYROLL OVERVIEW</p>
+          <h1 id="dashboard-title">September payroll</h1>
+          <p>Five employees, calculated under current Kenyan statutory rules.</p>
+        </div>
+        <button class="primary" data-open-calculator>Run payroll <span>→</span></button>
+      </div>
+
+      <div class="metrics" id="summary-metrics"></div>
+
+      <div class="dashboard-grid">
+        <article class="panel payroll-panel">
+          <div class="panel-head">
+            <div><p class="eyebrow">PAYROLL RUN</p><h2>Employee breakdown</h2></div>
+            <span class="status"><span class="pulse"></span> Ready for review</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Employee</th><th>Gross pay</th><th>Statutory</th><th>Net pay</th><th>Status</th></tr></thead>
+              <tbody id="employee-table"></tbody>
+            </table>
+          </div>
+        </article>
+
+        <aside class="panel statutory-panel">
+          <div class="panel-head"><div><p class="eyebrow">DEDUCTIONS</p><h2>Statutory split</h2></div></div>
+          <div class="donut-wrap">
+            <div class="donut" id="donut"><div><strong id="stat-total">KES 0</strong><span>Total</span></div></div>
+          </div>
+          <div class="legend" id="stat-legend"></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="view" id="calculator" aria-labelledby="calculator-title">
+      <div class="page-head compact">
+        <div><p class="eyebrow">LIVE CALCULATOR</p><h1 id="calculator-title">Calculate net salary</h1><p>Edit any value. The payslip updates immediately.</p></div>
+        <span class="rule-badge">2026 rules</span>
+      </div>
+      <div class="calculator-grid">
+        <form class="panel calc-form" id="payroll-form">
+          <div class="form-row"><label for="basic">Basic salary <span>KES</span></label><input id="basic" name="basic" type="number" min="0" step="1000" value="120000"></div>
+          <div class="form-row"><label for="allowances">Taxable allowances <span>KES</span></label><input id="allowances" name="allowances" type="number" min="0" step="500" value="15000"></div>
+          <div class="form-row"><label for="benefits">Taxable benefits <span>KES</span></label><input id="benefits" name="benefits" type="number" min="0" step="500" value="0"></div>
+          <div class="form-row"><label for="pension">Additional pension <span>KES</span></label><input id="pension" name="pension" type="number" min="0" step="500" value="5000"></div>
+          <div class="form-row"><label for="other">Other deductions <span>KES</span></label><input id="other" name="other" type="number" min="0" step="500" value="0"></div>
+          <label class="check-row"><input id="resident" type="checkbox" checked><span>Kenyan tax resident, apply personal relief</span></label>
+          <button class="secondary" type="reset">Reset example</button>
+        </form>
+
+        <article class="payslip" aria-live="polite">
+          <div class="payslip-top"><div><p class="eyebrow">ESTIMATED PAYSLIP</p><h2>September 2026</h2></div><span>CONFIDENTIAL</span></div>
+          <div class="hero-number"><span>NET PAY</span><strong id="net-pay">KES 0.00</strong></div>
+          <div class="payslip-section"><h3>Earnings</h3><div class="line"><span>Gross pay</span><strong id="gross-pay">KES 0.00</strong></div></div>
+          <div class="payslip-section"><h3>Statutory deductions</h3><div id="payslip-lines"></div></div>
+          <div class="payslip-section employer"><h3>Employer view</h3><div class="line"><span>Total employment cost</span><strong id="employer-cost">KES 0.00</strong></div></div>
+          <button class="download" id="print-payslip">Print payslip</button>
+        </article>
+      </div>
+    </section>
+
+    <section class="view" id="employees" aria-labelledby="employees-title">
+      <div class="page-head compact"><div><p class="eyebrow">TEAM</p><h1 id="employees-title">Employee register</h1><p>Sample records used for this demonstration.</p></div><button class="primary" data-open-calculator>Add employee <span>+</span></button></div>
+      <div class="employee-cards" id="employee-cards"></div>
+    </section>
+
+    <section class="view" id="compliance" aria-labelledby="compliance-title">
+      <div class="page-head compact"><div><p class="eyebrow">CONTROLS</p><h1 id="compliance-title">Compliance centre</h1><p>Rates, due dates and calculation assumptions in one auditable view.</p></div><span class="rule-badge">Effective Feb 2026</span></div>
+      <div class="compliance-grid">
+        <article class="panel deadline"><span>09</span><div><p class="eyebrow">NEXT MONTH</p><h2>PAYE and NSSF remittance</h2><p>Prepare statutory returns and payments by the applicable deadline.</p></div></article>
+        <article class="panel rules"><h2>Active statutory rules</h2><div class="rule"><span>PAYE</span><strong>10% to 35%</strong><small>Personal relief KES 2,400</small></div><div class="rule"><span>NSSF</span><strong>6% employee + employer</strong><small>2026 upper limit KES 108,000</small></div><div class="rule"><span>SHIF</span><strong>2.75% of gross</strong><small>Minimum KES 300</small></div><div class="rule"><span>Housing Levy</span><strong>1.5% employee + employer</strong><small>Calculated on gross salary</small></div></article>
+        <article class="panel audit"><h2>Audit controls</h2><ul><li><span>✓</span> Decimal-safe money calculations</li><li><span>✓</span> Versioned API contract</li><li><span>✓</span> Boundary tests for every tax band</li><li><span>✓</span> Centralised statutory configuration</li></ul></article>
+      </div>
+      <p class="disclaimer">Demonstration software. Payroll teams should validate production calculations against official KRA, NSSF and SHA guidance.</p>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
+
