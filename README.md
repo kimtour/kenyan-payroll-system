@@ -4,7 +4,13 @@ A full-stack payroll demonstration built for Kenyan employers. It calculates PAY
 
 ## Live demo
 
-[Open the live KenPay dashboard](https://kenyan-payroll-system.kynkyra-9052.chatgpt.site). Select **Calculator**, change a salary value, and show the instant payslip breakdown.
+- [Application dashboard on Render](https://kenyan-payroll-system.onrender.com/)
+- [Interactive API documentation](https://kenyan-payroll-system.onrender.com/docs)
+- [Health check](https://kenyan-payroll-system.onrender.com/health)
+- [Current statutory rates](https://kenyan-payroll-system.onrender.com/api/v1/rates)
+- [Static showcase backup](https://kenyan-payroll-system.kynkyra-9052.chatgpt.site)
+
+The Render free instance can take several seconds to wake after a period of inactivity.
 
 ## What this project demonstrates
 
@@ -61,6 +67,8 @@ pytest -q
 ruff check app tests
 ```
 
+Every push is verified by [GitHub Actions](https://github.com/kimtour/kenyan-payroll-system/actions). See the [brief interview guide](docs/INTERVIEW_GUIDE.md) for a focused demonstration script.
+
 ## Architecture
 
 ```mermaid
@@ -84,5 +92,5 @@ flowchart LR
 1. Open the dashboard and explain the payroll summary and audit status.
 2. Open the calculator and change the basic salary to show reactive calculations.
 3. Explain that policy values are centralised, not scattered through business logic.
-4. Open `/docs` locally to demonstrate the API contract and validation.
+4. Open the [live API documentation](https://kenyan-payroll-system.onrender.com/docs) to demonstrate the API contract and validation.
 5. Show the tests for tax-band boundaries, NSSF caps, reconciliation and invalid inputs.
