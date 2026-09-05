@@ -19,8 +19,8 @@ NSSF_UPPER_LIMIT = Decimal("108000")
 PENSION_DEDUCTION_LIMIT = Decimal("30000")
 
 
-def money(value: Decimal) -> Decimal:
-    return value.quantize(MONEY, rounding=ROUND_HALF_UP)
+def money(value: Decimal | int | float) -> Decimal:
+    return Decimal(str(value)).quantize(MONEY, rounding=ROUND_HALF_UP)
 
 
 def progressive_tax(taxable_pay: Decimal) -> Decimal:
@@ -82,6 +82,10 @@ def calculate_payroll(
     other_deductions: Decimal = Decimal("0"),
     resident: bool = True,
 ) -> PayrollResult:
+    basic_salary, allowances, taxable_benefits, pension, other_deductions = (
+        Decimal(str(value))
+        for value in (basic_salary, allowances, taxable_benefits, pension, other_deductions)
+    )
     values = (basic_salary, allowances, taxable_benefits, pension, other_deductions)
     if any(value < 0 for value in values):
         raise ValueError("Payroll amounts cannot be negative")
@@ -107,4 +111,3 @@ def calculate_payroll(
         tax_before_relief, relief, paye, money(other_deductions), money(pension),
         deductions, net, employer_nssf, ahl_employer, employer_cost,
     )
-
