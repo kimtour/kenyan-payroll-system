@@ -12,6 +12,18 @@ def test_health_endpoint():
     assert response.json()["status"] == "healthy"
 
 
+def test_dashboard_endpoint():
+    response = client.get("/")
+    assert response.status_code == 200
+    assert "KenPay" in response.text
+
+
+def test_rates_endpoint():
+    response = client.get("/api/v1/rates")
+    assert response.status_code == 200
+    assert response.json()["nssf"]["upper_limit"] == 108000
+
+
 def test_calculate_endpoint():
     response = client.post(
         "/api/v1/payroll/calculate",
