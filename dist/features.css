@@ -1,0 +1,68 @@
+input[type="text"],
+input[type="search"] {
+  width: 100%;
+  border: 1px solid #d9dce4;
+  border-radius: 9px;
+  padding: 11px 12px;
+  background: #fafbfc;
+  color: var(--navy);
+  font: inherit;
+  font-weight: 700;
+  outline: none;
+}
+
+input[type="text"]:focus,
+input[type="search"]:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201, 164, 78, .15);
+}
+
+.payslip-top small { color: #aeb6ca; }
+.employee-tools {
+  display: grid;
+  grid-template-columns: auto minmax(240px, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  margin-bottom: 17px;
+}
+.employee-tools label { font-size: .78rem; font-weight: 750; }
+.compact-button { width: auto; padding: 11px 16px; }
+.employee-card { position: relative; }
+.employee-id { position: absolute; right: 18px; top: 24px; color: var(--muted); }
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  background: white;
+  border: 1px dashed #d9dce4;
+  border-radius: 14px;
+  padding: 36px;
+  color: var(--muted);
+}
+.reports-grid { display: grid; grid-template-columns: 1.7fr 1fr; gap: 18px; }
+.report-chart { min-height: 350px; }
+.bars { height: 260px; display: flex; align-items: flex-end; gap: 12px; padding: 35px 24px 20px; }
+.bar-column { height: 100%; flex: 1; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 8px; }
+.bar { width: 100%; max-width: 38px; background: linear-gradient(180deg, var(--gold), #e4cd91); border-radius: 6px 6px 2px 2px; min-height: 12px; }
+.bar-column span { font-size: .68rem; color: var(--muted); }
+.ratio { padding: 15px 0; border-top: 1px solid var(--line); }
+.ratio > div { display: flex; justify-content: space-between; gap: 16px; font-size: .78rem; margin-bottom: 8px; }
+.ratio strong { color: var(--navy); }
+progress { width: 100%; height: 8px; accent-color: var(--gold); }
+dialog { border: 0; border-radius: 16px; padding: 0; box-shadow: 0 28px 70px rgba(10, 15, 30, .3); width: min(92vw, 480px); }
+dialog::backdrop { background: rgba(10, 15, 30, .56); backdrop-filter: blur(3px); }
+.dialog-card { padding: 24px; }
+.dialog-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
+.dialog-head h2 { margin: 0; color: var(--navy); }
+.icon-button { border: 0; background: #eef0f5; border-radius: 8px; width: 34px; height: 34px; cursor: pointer; font-size: 1.25rem; }
+.dialog-card > label { display: block; font-size: .78rem; font-weight: 750; margin-top: 14px; }
+.dialog-card > label input { margin-top: 6px; }
+.dialog-actions { display: flex; gap: 12px; margin-top: 22px; }
+.dialog-actions button { flex: 1; }
+
+@media (max-width: 980px) { .reports-grid { grid-template-columns: 1fr; } }
+@media (max-width: 720px) {
+  .employee-tools { grid-template-columns: 1fr; }
+  .bars { gap: 5px; padding-inline: 12px; }
+  .bar-column span { font-size: .58rem; }
+}
