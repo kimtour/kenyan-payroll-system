@@ -8,9 +8,6 @@ A full-stack payroll demonstration built for Kenyan employers. It calculates PAY
 - [Interactive API documentation](https://kenyan-payroll-system.onrender.com/docs)
 - [Health check](https://kenyan-payroll-system.onrender.com/health)
 - [Current statutory rates](https://kenyan-payroll-system.onrender.com/api/v1/rates)
-- [Static showcase backup](https://kenyan-payroll-system.kynkyra-9052.chatgpt.site)
-
-The Render free instance can take several seconds to wake after a period of inactivity.
 
 ## What this project demonstrates
 
@@ -19,6 +16,10 @@ The Render free instance can take several seconds to wake after a period of inac
 - FastAPI and Pydantic REST API design
 - Progressive tax-band and boundary handling
 - Responsive, accessible front-end without a framework dependency
+- Employee creation and employee search
+- Downloadable payroll CSV reports
+- Monthly metrics and annual payroll projections
+- Single-employee, batch and annual projection APIs
 - Automated unit and API tests
 - Docker packaging and GitHub Actions CI
 - Centralised policy configuration for maintainable rate changes
@@ -39,10 +40,10 @@ Statutory rates are centralised in `app/calculator.py`. This is demonstration so
 ## Run the API
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements-dev.txt
-uvicorn app.main:app --reload
+python -m venv .venv # Create an isolated Python environment.
+source .venv/bin/activate # Activate the environment on macOS or Linux.
+pip install -r requirements-dev.txt # Install the application and test dependencies.
+uvicorn app.main:app --reload # Start the local development server.
 ```
 
 Open:
@@ -54,20 +55,18 @@ Open:
 ## API example
 
 ```bash
-curl -X POST http://127.0.0.1:8000/api/v1/payroll/calculate \
-  -H "Content-Type: application/json" \
-  -d '{"basic_salary":120000,"allowances":15000,"pension":5000}'
+curl -X POST -H "Content-Type: application/json" -d '{"basic_salary":120000,"allowances":15000,"pension":5000}' http://127.0.0.1:8000/api/v1/payroll/calculate # Request one payroll calculation with JSON input.
 ```
 
 ## Run tests
 
 ```bash
-pip install -r requirements-dev.txt
-pytest -q
-ruff check app tests
+pip install -r requirements-dev.txt # Install the development and test packages.
+pytest -q # Run the complete automated test suite.
+ruff check app tests # Check Python code quality.
 ```
 
-Every push is verified by [GitHub Actions](https://github.com/kimtour/kenyan-payroll-system/actions). See the [brief interview guide](docs/INTERVIEW_GUIDE.md) for a focused demonstration script.
+Every push is verified by [GitHub Actions](https://github.com/kimtour/kenyan-payroll-system/actions). Read the [demonstration guide](docs/DEMO_GUIDE.md) for a focused product walkthrough and [build-from-scratch guide](docs/BUILD_FROM_SCRATCH.md) for an explained setup process.
 
 ## Architecture
 
@@ -87,10 +86,12 @@ flowchart LR
 - [NSSF Year 4 contribution notice](https://www.nssf.or.ke/notice-to-employers-year-4-2026-nssf-contribution-rates)
 - [Social Health Authority](https://sha.go.ke/)
 
-## Interview walkthrough
+## Product walkthrough
 
 1. Open the dashboard and explain the payroll summary and audit status.
 2. Open the calculator and change the basic salary to show reactive calculations.
 3. Explain that policy values are centralised, not scattered through business logic.
-4. Open the [live API documentation](https://kenyan-payroll-system.onrender.com/docs) to demonstrate the API contract and validation.
-5. Show the tests for tax-band boundaries, NSSF caps, reconciliation and invalid inputs.
+4. Search the employee register, add an employee and export the payroll CSV.
+5. Review the annual projections and payroll ratios under **Reports**.
+6. Open the [live API documentation](https://kenyan-payroll-system.onrender.com/docs) to inspect the API contract and validation.
+7. Review the tests for tax-band boundaries, NSSF caps, reconciliation, batch processing and invalid inputs.
