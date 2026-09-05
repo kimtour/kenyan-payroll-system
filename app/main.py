@@ -1,12 +1,17 @@
 """FastAPI entry point for the Kenyan Payroll System."""
 
 from decimal import Decimal
+from pathlib import Path
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from app.calculator import calculate_payroll
+
+
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 app = FastAPI(
@@ -24,10 +29,10 @@ app.add_middleware(
 
 class PayrollRequest(BaseModel):
     basic_salary: Decimal = Field(ge=0, examples=[120000])
-    allowances: Decimal = Field(default=0, ge=0, examples=[15000])
-    taxable_benefits: Decimal = Field(default=0, ge=0)
-    pension: Decimal = Field(default=0, ge=0)
-    other_deductions: Decimal = Field(default=0, ge=0)
+    allowances: Decimal = Field(default=Decimal("0"), ge=0, examples=[15000])
+    taxable_benefits: Decimal = Field(default=Decimal("0"), ge=0)
+    pension: Decimal = Field(default=Decimal("0"), ge=0)
+    other_deductions: Decimal = Field(default=Decimal("0"), ge=0)
     resident: bool = True
 
 
@@ -62,3 +67,6 @@ def rates() -> dict:
         "nssf": {"rate": 0.06, "lower_limit": 9000, "upper_limit": 108000},
     }
 
+
+# Register the dashboard last so API, health and OpenAPI routes take priority.
+app.mount("/", StaticFiles(directory=BASE_DIR / "dist", html=True), name="dashboard")
