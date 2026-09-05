@@ -18,3 +18,4 @@ jobs:
       - run: pip install -r requirements-dev.txt
       - run: ruff check app tests
       - run: pytest -q
+      - run: node --check dist/app.js
