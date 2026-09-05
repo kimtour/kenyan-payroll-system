@@ -6,6 +6,7 @@
   <meta name="description" content="Interactive Kenyan payroll calculator using 2026 PAYE, NSSF, SHIF and Affordable Housing Levy rules.">
   <title>KenPay, Kenyan Payroll System</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="features.css">
 </head>
 <body>
   <header class="topbar">
@@ -17,6 +18,7 @@
       <button class="nav-link active" data-view="dashboard">Dashboard</button>
       <button class="nav-link" data-view="calculator">Calculator</button>
       <button class="nav-link" data-view="employees">Employees</button>
+      <button class="nav-link" data-view="reports">Reports</button>
       <button class="nav-link" data-view="compliance">Compliance</button>
     </nav>
     <div class="period"><span class="pulse"></span> September 2026 payroll</div>
@@ -28,7 +30,7 @@
         <div>
           <p class="eyebrow">PAYROLL OVERVIEW</p>
           <h1 id="dashboard-title">September payroll</h1>
-          <p>Five employees, calculated under current Kenyan statutory rules.</p>
+          <p id="employee-summary">Five employees, calculated under current Kenyan statutory rules.</p>
         </div>
         <button class="primary" data-open-calculator>Run payroll <span>→</span></button>
       </div>
@@ -66,6 +68,7 @@
       </div>
       <div class="calculator-grid">
         <form class="panel calc-form" id="payroll-form">
+          <div class="form-row"><label for="employee-name">Employee name</label><input id="employee-name" name="employeeName" type="text" value="Samuel Kimani"></div>
           <div class="form-row"><label for="basic">Basic salary <span>KES</span></label><input id="basic" name="basic" type="number" min="0" step="1000" value="120000"></div>
           <div class="form-row"><label for="allowances">Taxable allowances <span>KES</span></label><input id="allowances" name="allowances" type="number" min="0" step="500" value="15000"></div>
           <div class="form-row"><label for="benefits">Taxable benefits <span>KES</span></label><input id="benefits" name="benefits" type="number" min="0" step="500" value="0"></div>
@@ -76,7 +79,7 @@
         </form>
 
         <article class="payslip" aria-live="polite">
-          <div class="payslip-top"><div><p class="eyebrow">ESTIMATED PAYSLIP</p><h2>September 2026</h2></div><span>CONFIDENTIAL</span></div>
+          <div class="payslip-top"><div><p class="eyebrow">ESTIMATED PAYSLIP</p><h2 id="payslip-employee">Samuel Kimani</h2><small>September 2026</small></div><span>CONFIDENTIAL</span></div>
           <div class="hero-number"><span>NET PAY</span><strong id="net-pay">KES 0.00</strong></div>
           <div class="payslip-section"><h3>Earnings</h3><div class="line"><span>Gross pay</span><strong id="gross-pay">KES 0.00</strong></div></div>
           <div class="payslip-section"><h3>Statutory deductions</h3><div id="payslip-lines"></div></div>
@@ -87,8 +90,22 @@
     </section>
 
     <section class="view" id="employees" aria-labelledby="employees-title">
-      <div class="page-head compact"><div><p class="eyebrow">TEAM</p><h1 id="employees-title">Employee register</h1><p>Sample records used for this demonstration.</p></div><button class="primary" data-open-calculator>Add employee <span>+</span></button></div>
+      <div class="page-head compact"><div><p class="eyebrow">TEAM</p><h1 id="employees-title">Employee register</h1><p>Manage the current payroll records.</p></div><button class="primary" id="add-employee">Add employee <span>+</span></button></div>
+      <div class="employee-tools panel">
+        <label for="employee-search">Search employees</label>
+        <input id="employee-search" type="search" placeholder="Search by name or role">
+        <button class="secondary compact-button" id="export-csv">Export payroll CSV</button>
+      </div>
       <div class="employee-cards" id="employee-cards"></div>
+    </section>
+
+    <section class="view" id="reports" aria-labelledby="reports-title">
+      <div class="page-head compact"><div><p class="eyebrow">ANALYTICS</p><h1 id="reports-title">Payroll reports</h1><p>Monthly totals and twelve-month projections.</p></div><button class="primary" id="reports-export">Export CSV <span>↓</span></button></div>
+      <div class="metrics" id="report-metrics"></div>
+      <div class="reports-grid">
+        <article class="panel report-chart"><div class="panel-head"><div><p class="eyebrow">COST FORECAST</p><h2>Projected employer cost</h2></div><span class="rule-badge">12 months</span></div><div class="bars" id="cost-bars"></div></article>
+        <article class="panel rules"><h2>Payroll ratios</h2><div id="payroll-ratios"></div></article>
+      </div>
     </section>
 
     <section class="view" id="compliance" aria-labelledby="compliance-title">
@@ -102,7 +119,17 @@
     </section>
   </main>
 
+  <dialog id="employee-dialog">
+    <form method="dialog" id="employee-form" class="dialog-card">
+      <div class="dialog-head"><div><p class="eyebrow">NEW RECORD</p><h2>Add employee</h2></div><button value="cancel" class="icon-button" aria-label="Close">×</button></div>
+      <label>Full name<input name="name" type="text" required minlength="2" placeholder="Jane Wanjiru"></label>
+      <label>Role<input name="role" type="text" required placeholder="Software Engineer"></label>
+      <label>Basic salary, KES<input name="basic" type="number" required min="0" step="1000" value="80000"></label>
+      <label>Allowances, KES<input name="allowances" type="number" min="0" step="500" value="5000"></label>
+      <div class="dialog-actions"><button value="cancel" class="secondary">Cancel</button><button value="default" class="primary" id="save-employee">Save employee</button></div>
+    </form>
+  </dialog>
+
   <script src="app.js"></script>
 </body>
 </html>
-
